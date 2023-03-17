@@ -1,31 +1,94 @@
-<div class="grid">
-  <div class="col-12">
-    <div class="card px-6 py-6">
-      <div class="card">
-        <div class="grid p-fluid">
-          <div class="card col-12">
-            <div class="card">
+<div class="grid p-fluid">
+  <div class="card col-12">
+    <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+    <div class="card">
 
-              <div class="field">
-                <label for="dni">Correo</label>
-                <input id="dni" pInputText required autofocus>
+      <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="new()"></button>
+          <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger mr-2"></button>
+        </ng-template>
+      </p-toolbar>
 
+      <p-table #dt [value]="clients" [rows]="10" [paginator]="true" [globalFilterFields]="['name']"
+        [tableStyle]="{'min-width': '75rem'}" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <h5 class="m-0">Manage Clients</h5>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 4rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="name" style="min-width:15rem">Name <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="price">Age <p-sortIcon field="price"></p-sortIcon></th>
+            <th pSortableColumn="category" style="min-width:10rem">Email <p-sortIcon field="category"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-client>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="client"></p-tableCheckbox>
+            </td>
+            <td>{{client.nombre}}</td>
+            <td>{{client.edad}}</td>
+            <td>{{client.correo}}</td>
+            <td></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            In total there are {{clients ? clients.length : 0 }} clients.
+          </div>
+        </ng-template>
+      </p-table>
+
+    </div>
+
+    <!--Client-->
+    <p-dialog [(visible)]="clientDialog" header="Agregar o modificar cliente" [modal]="true" [style]="{width:'450px'}">
+      <div class="grid p-fluid">
+        <div class="col-12 md:col-12">
+          <div class="card">
+            <h5>Nombre</h5>
+            <div class="grid formgrid">
+              <div class="col-12 mb-12 lg:col-14 lg:mb-0">
+                <input type="text" pInputText [(ngModel)]="client.nombre">
               </div>
-
-              <div class="field">
-                <label for="name">Name</label>
-                <input type="text" pInputText id="name" required autofocus />
+            </div>
+            <h5>Edad</h5>
+            <div class="grid formgrid">
+              <div class="col-12 mb-12 lg:col-14 lg:mb-0">
+                <input type="text" pInputText [(ngModel)]="client.edad">
               </div>
+            </div>
 
-              <div class="field">
-                <label for="surname">Edad</label>
-                <input id="surname" pInputText required autofocus />
+            <h5>Correo</h5>
+            <div class="grid formgrid">
+              <div class="col-12 mb-12 lg:col-14 lg:mb-0">
+                <input type="text" pInputText [(ngModel)]="client.correo">
               </div>
-
             </div>
 
           </div>
         </div>
+
       </div>
-    </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+          (click)="clientDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+          (click)="confirmAddClient()"></button>
+      </ng-template>
+    </p-dialog>
+
+
+
+
   </div>
+</div>

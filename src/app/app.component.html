@@ -6,7 +6,6 @@
       <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
           <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="new()"></button>
-          <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger mr-2"></button>
         </ng-template>
       </p-toolbar>
 
@@ -38,7 +37,12 @@
             <td>{{client.nombre}}</td>
             <td>{{client.edad}}</td>
             <td>{{client.correo}}</td>
-            <td></td>
+            <td>
+              <div class="flex">
+                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                      (click)="deleteClient(client)"></button>
+              </div>
+          </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
